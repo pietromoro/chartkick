@@ -60,6 +60,7 @@ module Chartkick
         end
       end
       nonce_html = nonce ? " nonce=\"#{ERB::Util.html_escape(nonce)}\"" : nil
+      load_event = defined?(Turbolinks) ? "turbolinks:load" : "load"
 
       # html vars
       html_vars = {
@@ -84,13 +85,13 @@ module Chartkick
       end
       createjs = "new Chartkick[%{type}](%{id}, %{data}, %{options});" % js_vars
 
-      if defer
+      if defer || defined?(Turbolinks)
         js = <<JS
 <script type="application/javascript"#{nonce_html}>
   (function() {
     var createChart = function() { #{createjs} };
     if (window.addEventListener) {
-      window.addEventListener("load", createChart, true);
+      window.addEventListener("#{load_event}", createChart, true);
     } else if (window.attachEvent) {
       window.attachEvent("onload", createChart);
     } else {
