@@ -90,7 +90,7 @@ module Chartkick
 
         # removing turbolinks:load listener only needed for defer
         js = <<JS
-<script type="text/javascript"#{nonce_html}>
+<script type="application/javascript"#{nonce_html}>
   (function() {
     var createChart = function() {
       document.removeEventListener("turbolinks:load", createChart, true);
@@ -109,7 +109,7 @@ module Chartkick
 JS
       elsif defer
         js = <<JS
-<script type="text/javascript"#{nonce_html}>
+<script type="application/javascript"#{nonce_html}>
   (function() {
     var createChart = function() { #{createjs} };
     if (window.addEventListener) {
@@ -124,7 +124,7 @@ JS
 JS
       else
         js = <<JS
-<script type="text/javascript"#{nonce_html}>
+<script type="application/javascript"#{nonce_html}>
   #{createjs}
 </script>
 JS
